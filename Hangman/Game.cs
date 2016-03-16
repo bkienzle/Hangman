@@ -16,8 +16,6 @@ namespace Hangman
             string userPrompt = "Pick a letter";
             if (Word.isFullyUnmasked()) userPrompt = "You win.";
 
-            string wordblanks = "_ _ _ _ _";
-
             Console.WriteLine();
             Console.WriteLine(new string(' ', 10) +                             ",____.");
             Console.WriteLine(new string(' ', 10) +                             "|    |");
