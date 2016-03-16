@@ -14,6 +14,7 @@ namespace Hangman
             RightLeg,
         }
         public bool isPlaying = true;
+        public bool isMatchOver = false;
         int numberOfGuesses = 0;
         string[] hangee = new string[] { " ", " ", " ", " ", " ", " " };
         public void DrawBoard()
@@ -24,9 +25,9 @@ namespace Hangman
             Console.WriteLine();
             Console.WriteLine(new string(' ', 10) +                                                                                               ",____.");
             Console.WriteLine(new string(' ', 10) +                                                                                               "|    |");
-            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Head] +                                                                  "    |" + new string(' ', 20) + userPrompt);
+            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Head] +                                                                  "    |" + new string(' ', 15) + userPrompt);
             Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.LeftArm] + hangee[(int)BodyParts.Body] + hangee[(int)BodyParts.RightArm] + "   |");
-            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Body] +                                                                  "    |" + new string(' ', 20) + Word.MaskedWord());
+            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Body] +                                                                  "    |" + new string(' ', 15) + Word.MaskedWord());
             Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.LeftLeg] + " " + hangee[(int)BodyParts.RightLeg] +                         "   |");
             Console.WriteLine(new string(' ', 10) +                                                                                               "     |");
             Console.WriteLine(new string(' ', 6) +                                                                                            "---------^--");
@@ -39,6 +40,7 @@ namespace Hangman
                 hangee[i] = " ";
             }
             numberOfGuesses = 0;
+            Word.guessedLetters.Clear();
         }
         void IncrementHangman()
         {
@@ -73,11 +75,11 @@ namespace Hangman
             char guess = char.ToLower(Console.ReadKey().KeyChar);
             if (char.IsLetter(guess))
             {
-                Word.guessedLetters.Add(guess);
-                if (!Word.isInAnswer(guess))
+                if (!Word.isInAnswer(guess) && !Word.guessedLetters.Contains(guess))
                 {
                     IncrementHangman();
                 }
+                Word.guessedLetters.Add(guess);
             }
         }
     }

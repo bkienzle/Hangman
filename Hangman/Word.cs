@@ -12,9 +12,6 @@ namespace Hangman
 
         public static string MaskedWord()
         {
-            guessedLetters.Add('t');
-            guessedLetters.Add('e');
-
             string result = hiddenWord;
             foreach (char hiddenLetter in hiddenWord.ToCharArray())
             {

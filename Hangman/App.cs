@@ -12,11 +12,14 @@ namespace Hangman
 
             while (hangman.isPlaying)
             {
-                Console.Clear();
-                human.ShowRecord();
                 hangman.Initialize();
-                hangman.DrawBoard();
-                hangman.PromptForLetter();
+                while (!hangman.isMatchOver)
+                {
+                    Console.Clear();
+                    human.ShowRecord();
+                    hangman.DrawBoard();
+                    hangman.PromptForLetter();
+                }
             }
             Console.ReadKey();
 
