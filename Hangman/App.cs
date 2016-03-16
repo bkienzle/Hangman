@@ -10,10 +10,14 @@ namespace Hangman
             Game hangman = new Game();
             human.GetName();
 
-            Console.Clear();
-            human.ShowRecord();
-            hangman.DrawBoard();
-
+            while (hangman.isPlaying)
+            {
+                Console.Clear();
+                human.ShowRecord();
+                hangman.Initialize();
+                hangman.DrawBoard();
+                hangman.PromptForLetter();
+            }
             Console.ReadKey();
 
         }

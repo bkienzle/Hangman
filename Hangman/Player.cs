@@ -7,8 +7,8 @@ namespace Hangman
         public string Name { get; set; }
         public int WinRecord { get; set; }
         public int LossRecord { get; set; }
-        public int TieRecord { get; set; }
-        public int TeamNumber { get; set; }
+        //public int TieRecord { get; set; }
+        //public int TeamNumber { get; set; }
 
         public void GetName()
         {
@@ -20,7 +20,7 @@ namespace Hangman
         public void ShowRecord()
         {
             Console.WriteLine();
-            Console.WriteLine("  {0}, your current record is: Wins: {1} Losses: {2} Ties: {3}", Name, WinRecord, LossRecord, TieRecord);
+            Console.WriteLine("  {0}, your current record is: Wins: {1} Losses: {2}", Name, WinRecord, LossRecord);
         }
     }
 }
