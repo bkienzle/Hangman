@@ -6,34 +6,32 @@ namespace Hangman
     {
         enum BodyParts
         {
-            Head,
-            Body,
-            LeftArm,
-            RightArm,
-            LeftLeg,
-            RightLeg,
+            head,
+            body,
+            leftArm,
+            rightArm,
+            leftLeg,
+            rightLeg,
         }
         public bool isPlaying = true;
         public bool isMatchOver = false;
-        int numberOfGuesses = 0;
+        public int numberOfGuesses = 0;
         string[] hangee = new string[] { " ", " ", " ", " ", " ", " " };
-        public void DrawBoard()
+        public void drawBoard()
         {
-            string userPrompt = "Pick a letter";
-            if (Word.isFullyUnmasked()) userPrompt = "You win.";
 
             Console.WriteLine();
             Console.WriteLine(new string(' ', 10) +                                                                                               ",____.");
             Console.WriteLine(new string(' ', 10) +                                                                                               "|    |");
-            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Head] +                                                                  "    |" + new string(' ', 15) + userPrompt);
-            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.LeftArm] + hangee[(int)BodyParts.Body] + hangee[(int)BodyParts.RightArm] + "   |");
-            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.Body] +                                                                  "    |" + new string(' ', 15) + Word.MaskedWord());
-            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.LeftLeg] + " " + hangee[(int)BodyParts.RightLeg] +                         "   |");
+            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.head] +                                                                  "    |");
+            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftArm] + hangee[(int)BodyParts.body] + hangee[(int)BodyParts.rightArm] + "   |");
+            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.body] +                                                                  "    |" + new string(' ', 15) + Word.maskedWord());
+            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftLeg] + " " + hangee[(int)BodyParts.rightLeg] +                         "   |");
             Console.WriteLine(new string(' ', 10) +                                                                                               "     |");
             Console.WriteLine(new string(' ', 6) +                                                                                            "---------^--");
             Console.WriteLine();
         }
-        public void Initialize()
+        public void initialize()
         {
             for (int i = 0; i < 6; i++)
             {
@@ -41,43 +39,55 @@ namespace Hangman
             }
             numberOfGuesses = 0;
             Word.guessedLetters.Clear();
+            isMatchOver = false;
         }
-        void IncrementHangman()
+        public bool hasWon()
+        {
+            if (Word.isFullyUnmasked()) return true;
+            return false;
+        }
+        public void playAgain(string lastGame)
+        {
+            Console.Write("  You {0}. Play again? ", lastGame);
+            if (Console.ReadKey().KeyChar == 'n') isPlaying = false;
+        }
+        void incrementHangman()
         {
             numberOfGuesses++;
             switch (numberOfGuesses) 
             {
                 case 1:
-                    hangee[(int)BodyParts.Head] = "O";
+                    hangee[(int)BodyParts.head] = "O";
                     break;
                 case 2:
-                    hangee[(int)BodyParts.Body] = "|";
+                    hangee[(int)BodyParts.body] = "|";
                     break;
                 case 3:
-                    hangee[(int)BodyParts.LeftArm] = "/";
+                    hangee[(int)BodyParts.leftArm] = "/";
                     break;
                 case 4:
-                    hangee[(int)BodyParts.RightArm] = @"\";
+                    hangee[(int)BodyParts.rightArm] = @"\";
                     break;
                 case 5:
-                    hangee[(int)BodyParts.LeftLeg] = "/";
+                    hangee[(int)BodyParts.leftLeg] = "/";
                     break;
                 case 6:
-                    hangee[(int)BodyParts.RightLeg] = @"\";
+                    hangee[(int)BodyParts.rightLeg] = @"\";
+                    isMatchOver = true;
                     break;
                 default:
                     return;
             }
         }
-        public void PromptForLetter()
+        public void promptForLetter()
         {
-            Console.Write("Guess a letter: ");
+            Console.Write("  Guess a letter: ");
             char guess = char.ToLower(Console.ReadKey().KeyChar);
             if (char.IsLetter(guess))
             {
                 if (!Word.isInAnswer(guess) && !Word.guessedLetters.Contains(guess))
                 {
-                    IncrementHangman();
+                    incrementHangman();
                 }
                 Word.guessedLetters.Add(guess);
             }

@@ -4,25 +4,39 @@ namespace Hangman
 {
     class App
     {
-        public void Start()
+        public void start()
         {
             Player human = new Player();
             Game hangman = new Game();
-            human.GetName();
+            human.getName();
 
             while (hangman.isPlaying)
             {
-                hangman.Initialize();
+                hangman.initialize();
                 while (!hangman.isMatchOver)
                 {
                     Console.Clear();
-                    human.ShowRecord();
-                    hangman.DrawBoard();
-                    hangman.PromptForLetter();
+                    human.showRecord();
+                    hangman.drawBoard();
+                    hangman.promptForLetter();
+                    if (hangman.numberOfGuesses == 6 || Word.isFullyUnmasked()) hangman.isMatchOver = true;
                 }
-            }
-            Console.ReadKey();
+                string gameResult = "lose";
+                if (hangman.hasWon())
+                {
+                    gameResult = "win";
+                    human.winRecord++;
+                }
+                else
+                {
+                    human.lossRecord++;
+                }
+                Console.Clear();
+                human.showRecord();
+                hangman.drawBoard();
+                hangman.playAgain(gameResult);
 
+            }
         }
     }
 }

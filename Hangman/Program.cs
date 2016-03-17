@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             App myApp = new App();
-            myApp.Start();
+            myApp.start();
         }
     }
 }

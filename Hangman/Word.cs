@@ -10,17 +10,23 @@ namespace Hangman
 
         public static List<char> guessedLetters = new List<char>();
 
-        public static string MaskedWord()
+        public static string maskedWord()
         {
             string result = hiddenWord;
             foreach (char hiddenLetter in hiddenWord.ToCharArray())
             {
                 bool isMatch = false;
-                foreach (char letter in guessedLetters)
+                if (!char.IsLetter(hiddenLetter))
                 {
-                    if (letter == hiddenLetter)
+                    isMatch = true;
+                }
+                else {
+                    foreach (char letter in guessedLetters)
                     {
-                        isMatch = true;
+                        if (letter == hiddenLetter)
+                        {
+                            isMatch = true;
+                        }
                     }
                 }
                 if (!isMatch)
@@ -41,7 +47,7 @@ namespace Hangman
         public static bool isFullyUnmasked()
         {
             bool areUnderscoresInWord = false;
-            foreach (char letter in MaskedWord())
+            foreach (char letter in maskedWord())
             {
                 if (letter == '_') areUnderscoresInWord = true;
             }
