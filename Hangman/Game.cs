@@ -24,10 +24,10 @@ namespace Hangman
             Console.WriteLine(new string(' ', 10) +                                                                                               ",____.");
             Console.WriteLine(new string(' ', 10) +                                                                                               "|    |");
             Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.head] +                                                                  "    |");
-            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftArm] + hangee[(int)BodyParts.body] + hangee[(int)BodyParts.rightArm] + "   |");
-            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.body] +                                                                  "    |" + new string(' ', 15) + Word.maskedWord());
-            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftLeg] + " " + hangee[(int)BodyParts.rightLeg] +                         "   |");
-            Console.WriteLine(new string(' ', 10) +                                                                                               "     |");
+            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftArm] + hangee[(int)BodyParts.body] + hangee[(int)BodyParts.rightArm] + "   |" + new string(' ', 15) + Word.maskedWord());
+            Console.WriteLine(new string(' ', 10) + hangee[(int)BodyParts.body] +                                                                  "    |");
+            Console.WriteLine(new string(' ', 9) + hangee[(int)BodyParts.leftLeg] + " " + hangee[(int)BodyParts.rightLeg] +                         "   | " + new string(' ', 15) + "Guessed letters:");
+            Console.WriteLine(new string(' ', 10) +                                                                                               "     |"  + new string(' ', 15) + Word.showGuessedLetters());
             Console.WriteLine(new string(' ', 6) +                                                                                            "---------^--");
             Console.WriteLine();
         }
@@ -39,6 +39,7 @@ namespace Hangman
             }
             numberOfGuesses = 0;
             Word.guessedLetters.Clear();
+            Word.pickNewWord();
             isMatchOver = false;
         }
         public bool hasWon()
@@ -89,7 +90,7 @@ namespace Hangman
                 {
                     incrementHangman();
                 }
-                Word.guessedLetters.Add(guess);
+                if (!Word.guessedLetters.Contains(guess)) Word.guessedLetters.Add(guess);
             }
         }
     }

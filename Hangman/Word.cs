@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Hangman
 {
     static class Word
     {
-        static string hiddenWord = "testword";
+        static string hiddenWord = "";
+
+        public static void pickNewWord()
+        {
+
+            string[] allWords = Hangman.Properties.Resources.words.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            Random rnd = new Random();
+            hiddenWord = allWords[rnd.Next(0,allWords.Length)];
+        }
 
         public static List<char> guessedLetters = new List<char>();
 
@@ -35,6 +44,12 @@ namespace Hangman
                 }
             }
             return Regex.Replace(result, ".{1}", "$0 ");
+        }
+        public static string showGuessedLetters()
+        {
+            string totalLetters = "";
+            foreach (char letter in guessedLetters) totalLetters += letter.ToString();
+            return Regex.Replace(totalLetters, ".{1}", "$0 ");
         }
         public static bool isInAnswer (char guess)
         {
