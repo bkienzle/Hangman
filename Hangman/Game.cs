@@ -4,6 +4,9 @@ namespace Hangman
 {
     class Game
     {
+        #region Enums
+
+        #endregion
         enum BodyParts
         {
             head,
@@ -13,10 +16,18 @@ namespace Hangman
             leftLeg,
             rightLeg,
         }
+
+        #region Public Variables
         public bool isPlaying = true;
         public bool isMatchOver = false;
         public int numberOfGuesses = 0;
+        #endregion
+
+        #region Private Variables
         string[] hangee = new string[] { " ", " ", " ", " ", " ", " " };
+        #endregion
+
+        #region Public Methods
         public void drawBoard()
         {
 
@@ -52,6 +63,22 @@ namespace Hangman
             Console.Write("  You {0}. Play again? ", lastGame);
             if (Console.ReadKey().KeyChar == 'n') isPlaying = false;
         }
+        public void promptForLetter()
+        {
+            Console.Write("  Guess a letter: ");
+            char guess = char.ToLower(Console.ReadKey().KeyChar);
+            if (char.IsLetter(guess))
+            {
+                if (!Word.isInAnswer(guess) && !Word.guessedLetters.Contains(guess))
+                {
+                    incrementHangman();
+                }
+                if (!Word.guessedLetters.Contains(guess)) Word.guessedLetters.Add(guess);
+            }
+        }
+        #endregion
+
+        #region Private Methods
         void incrementHangman()
         {
             numberOfGuesses++;
@@ -80,18 +107,6 @@ namespace Hangman
                     return;
             }
         }
-        public void promptForLetter()
-        {
-            Console.Write("  Guess a letter: ");
-            char guess = char.ToLower(Console.ReadKey().KeyChar);
-            if (char.IsLetter(guess))
-            {
-                if (!Word.isInAnswer(guess) && !Word.guessedLetters.Contains(guess))
-                {
-                    incrementHangman();
-                }
-                if (!Word.guessedLetters.Contains(guess)) Word.guessedLetters.Add(guess);
-            }
-        }
+        #endregion
     }
 }

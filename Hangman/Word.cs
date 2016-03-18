@@ -7,8 +7,11 @@ namespace Hangman
 {
     static class Word
     {
+        #region Private Variables
         static string hiddenWord = "";
+        #endregion
 
+        #region Public Methods
         public static void pickNewWord()
         {
 
@@ -69,5 +72,6 @@ namespace Hangman
             if (areUnderscoresInWord == true) return false;
             return true;
         }
+        #endregion
     }
 }
